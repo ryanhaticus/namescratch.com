@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import DomainTable, { IDomain } from '../components/DomainTable';
+import DomainComponent, { IDomain } from '../components/DomainTable';
 import HeaderComponent from '../components/Header';
 import Pagination from '../components/Pagination';
 import { useGlobalState } from '../providers/GlobalStateProvider';
@@ -17,7 +17,7 @@ const IndexPage = ({ domains }: IIndexPageProps) => {
     <>
       <div className='container mx-auto px-6 lg:px-8 pb-8 lg:pb-16'>
         <HeaderComponent />
-        <DomainTable />
+        <DomainComponent />
         <Pagination />
       </div>
     </>

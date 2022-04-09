@@ -2,8 +2,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { IDomain } from '../components/DomainTable';
 
 export interface IGlobalStateContextProps {
-  keywords: string;
-  setKeywords?: (keywords: string) => void;
+  domains: IDomain[];
+  keywords: string[];
+  setKeywords?: (keywords: string[]) => void;
   minLength: number;
   setMinLength?: (minLength: number) => void;
   maxLength: number;
@@ -22,10 +23,15 @@ export interface IGlobalStateContextProps {
   allowHyphens: boolean;
   setAllowHyphens?: (allowHyphens: boolean) => void;
   numberOfResults: number;
+  startsWith: string[];
+  setStartsWith?: (startsWith: string[]) => void;
+  endsWith: string[];
+  setEndsWith?: (endsWith: string[]) => void;
 }
 
 const GlobalStateContext = createContext<IGlobalStateContextProps>({
-  keywords: '',
+  domains: [],
+  keywords: [],
   minLength: 0,
   maxLength: 0,
   filteredDomains: [],
@@ -36,10 +42,14 @@ const GlobalStateContext = createContext<IGlobalStateContextProps>({
   allowNumbers: false,
   allowHyphens: false,
   numberOfResults: 0,
+  startsWith: [],
+  endsWith: [],
 });
 
 export const GlobalStateProvider = ({ children }) => {
-  const [keywords, _setKeywords] = useState('');
+  const [startsWith, _setStartsWith] = useState([]);
+  const [endsWith, _setEndsWith] = useState([]);
+  const [keywords, _setKeywords] = useState([]);
   const [minLength, _setMinLength] = useState(0);
   const [maxLength, _setMaxLength] = useState(86);
   const [domains, _setDomains] = useState<IDomain[]>([]);
@@ -52,7 +62,7 @@ export const GlobalStateProvider = ({ children }) => {
   const [allowHyphens, _setAllowHyphens] = useState(false);
   const [numberOfResults, _setNumberOfResults] = useState(0);
 
-  const setKeywords = (keywords: string) => {
+  const setKeywords = (keywords: string[]) => {
     _setKeywords(keywords);
   };
   const setMinLength = (minLength: number) => {
@@ -79,6 +89,12 @@ export const GlobalStateProvider = ({ children }) => {
   const setAllowHyphens = (allowHyphens: boolean) => {
     _setAllowHyphens(allowHyphens);
   };
+  const setStartsWith = (startsWith: string[]) => {
+    _setStartsWith(startsWith);
+  };
+  const setEndsWith = (endsWith: string[]) => {
+    _setEndsWith(endsWith);
+  };
 
   useEffect(() => {
     if (domains.length === 0) {
@@ -92,7 +108,14 @@ export const GlobalStateProvider = ({ children }) => {
       }
       const domainNoTLD = domain.split('.')[0];
       return (
-        (keywords === '' || domainNoTLD.includes(keywords)) &&
+        (keywords.length === 0 ||
+          keywords.filter((keyword) => domainNoTLD.includes(keyword)).length ==
+            keywords.length) &&
+        (startsWith.length === 0 ||
+          startsWith.filter((start) => domainNoTLD.startsWith(start)).length >
+            0) &&
+        (endsWith.length === 0 ||
+          endsWith.filter((end) => domainNoTLD.endsWith(end)).length > 0) &&
         (minLength === 0 || domainNoTLD.length >= minLength) &&
         (maxLength === 0 || domainNoTLD.length <= maxLength) &&
         (allowNumbers || !/\d/.test(domainNoTLD)) &&
@@ -113,15 +136,18 @@ export const GlobalStateProvider = ({ children }) => {
     maxDisplayed,
     allowHyphens,
     allowNumbers,
+    startsWith,
+    endsWith,
   ]);
 
   useEffect(() => {
     setPage(0);
-  }, [domains, keywords, minLength, maxLength, maxDisplayed]);
+  }, [domains, keywords, minLength, maxLength, maxDisplayed, pagesAvailable]);
 
   return (
     <GlobalStateContext.Provider
       value={{
+        domains,
         keywords,
         setKeywords,
         minLength,
@@ -142,6 +168,10 @@ export const GlobalStateProvider = ({ children }) => {
         allowHyphens,
         setAllowHyphens,
         numberOfResults,
+        startsWith,
+        setStartsWith,
+        endsWith,
+        setEndsWith,
       }}
     >
       {children}

@@ -1,8 +1,6 @@
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
 } from '@heroicons/react/solid';
 import { useGlobalState } from '../providers/GlobalStateProvider';
 
@@ -26,7 +24,7 @@ const Pagination = () => {
                 ? (page + 1) * maxDisplayed
                 : numberOfResults}
             </span>{' '}
-            of <span className='font-medium'>{numberOfResults}</span> results
+            of <span className='font-medium'>{numberOfResults}</span> domains
           </p>
         </div>
         <div className='w-full sm:w-auto'>
