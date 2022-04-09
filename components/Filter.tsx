@@ -300,7 +300,7 @@ const FilterComponent = () => {
             />
           </div>
         </label>
-        <div className='px-8'>
+        <div className='px-9'>
           <InputRange
             maxValue={80}
             minValue={1}
