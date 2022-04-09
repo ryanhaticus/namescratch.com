@@ -27,6 +27,8 @@ export interface IGlobalStateContextProps {
   setStartsWith?: (startsWith: string[]) => void;
   endsWith: string[];
   setEndsWith?: (endsWith: string[]) => void;
+  selectedTLDs: string[];
+  setSelectedTLDs?: (selectedTLDs: string[]) => void;
 }
 
 const GlobalStateContext = createContext<IGlobalStateContextProps>({
@@ -44,6 +46,7 @@ const GlobalStateContext = createContext<IGlobalStateContextProps>({
   numberOfResults: 0,
   startsWith: [],
   endsWith: [],
+  selectedTLDs: [],
 });
 
 export const GlobalStateProvider = ({ children }) => {
@@ -61,6 +64,7 @@ export const GlobalStateProvider = ({ children }) => {
   const [allowNumbers, _setAllowNumbers] = useState(false);
   const [allowHyphens, _setAllowHyphens] = useState(false);
   const [numberOfResults, _setNumberOfResults] = useState(0);
+  const [selectedTLDs, _setSelectedTLDs] = useState([]);
 
   const setKeywords = (keywords: string[]) => {
     _setKeywords(keywords);
@@ -95,12 +99,14 @@ export const GlobalStateProvider = ({ children }) => {
   const setEndsWith = (endsWith: string[]) => {
     _setEndsWith(endsWith);
   };
+  const setSelectedTLDs = (selectedTLDs: string[]) => {
+    _setSelectedTLDs(selectedTLDs);
+  };
 
   useEffect(() => {
     if (domains.length === 0) {
       return;
     }
-
     let tempDomains = [...domains];
     tempDomains = tempDomains.filter(({ domain }) => {
       if (domain === '') {
@@ -108,6 +114,8 @@ export const GlobalStateProvider = ({ children }) => {
       }
       const domainNoTLD = domain.split('.')[0];
       return (
+        (selectedTLDs.length === 0 ||
+          selectedTLDs.includes(domain.split('.')[1].replace('\r', ''))) &&
         (keywords.length === 0 ||
           keywords.filter((keyword) => domainNoTLD.includes(keyword)).length ==
             keywords.length) &&
@@ -138,6 +146,7 @@ export const GlobalStateProvider = ({ children }) => {
     allowNumbers,
     startsWith,
     endsWith,
+    selectedTLDs,
   ]);
 
   useEffect(() => {
@@ -172,6 +181,8 @@ export const GlobalStateProvider = ({ children }) => {
         setStartsWith,
         endsWith,
         setEndsWith,
+        selectedTLDs,
+        setSelectedTLDs,
       }}
     >
       {children}

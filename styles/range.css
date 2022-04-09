@@ -1,0 +1,14 @@
+.input-range__label {
+  font-family: inherit !important;
+  color: #000 !important;
+  font-weight: 500 !important;
+}
+
+.input-range__track--active {
+  background-color: #e11d48 !important;
+}
+
+.input-range__slider {
+  background-color: #e11d48 !important;
+  border-color: #e11d48 !important;
+}

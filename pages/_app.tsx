@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import '../styles/globals.css';
+import 'react-input-range/lib/css/index.css';
+import '../styles/range.css';
 import { GlobalStateProvider } from '../providers/GlobalStateProvider';
 
 const NameScratch = ({ Component, pageProps }) => {
