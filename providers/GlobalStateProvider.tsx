@@ -57,7 +57,7 @@ export const GlobalStateProvider = ({ children }) => {
   const [maxLength, _setMaxLength] = useState(86);
   const [domains, _setDomains] = useState<IDomain[]>([]);
   const [filteredDomains, _setFilteredDomains] = useState<IDomain[]>([]);
-  const [maxDisplayed, _setMaxDisplayed] = useState(10);
+  const [maxDisplayed, _setMaxDisplayed] = useState(30);
   const [page, _setPage] = useState(0);
   const [pagesAvailable, _setPagesAvailable] = useState(1);
   const [menuOpen, _setMenuOpen] = useState(false);
