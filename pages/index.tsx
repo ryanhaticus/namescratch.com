@@ -37,6 +37,7 @@ export const getStaticProps = async () => {
   const domains = [];
 
   const dates = [
+    getFormattedDate(-1),
     getFormattedDate(1),
     getFormattedDate(2),
     getFormattedDate(3),

@@ -1,3 +1,4 @@
+import { QuestionMarkCircleIcon } from '@heroicons/react/solid';
 import { useGlobalState } from '../providers/GlobalStateProvider';
 import FilterComponent from './Filter';
 
@@ -41,13 +42,26 @@ const TableComponent = () => {
                       scope='col'
                       className='px-4 py-3.5 text-left text-sm font-semibold text-gray-900'
                     >
-                      Scratch Rating
+                      <div className='flex gap-x-1 '>
+                        Scratch Rating{' '}
+                        <div title='Domains are rated based on length, TLD, and composition.'>
+                          <QuestionMarkCircleIcon
+                            className='text-indigo-600 h-5 w-5'
+                            aria-hidden='true'
+                          />
+                        </div>
+                      </div>
                     </th>
                     <th
                       scope='col'
                       className='px-4 py-3.5 text-left text-sm font-semibold text-gray-900'
                     >
-                      Expiry Date
+                      <div className='flex gap-x-1'>
+                        Expiry Date
+                        <div title='The date in which the listed domain becomes available to register.'>
+                          <QuestionMarkCircleIcon className='text-indigo-600 h-5 w-5' />
+                        </div>
+                      </div>
                     </th>
                   </tr>
                 </thead>
