@@ -21,11 +21,11 @@ const IndexPage = () => {
   useEffect(() => {
     (async () => {
       const dates = [
+        getFormattedDate(-2),
         getFormattedDate(-1),
+        getFormattedDate(0),
         getFormattedDate(1),
         getFormattedDate(2),
-        getFormattedDate(3),
-        getFormattedDate(4),
       ];
       for (let date of dates) {
         const response = await fetch(`/api/domains?date=${date}`);

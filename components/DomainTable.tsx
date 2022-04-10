@@ -66,17 +66,14 @@ const TableComponent = () => {
                   </tr>
                 </thead>
                 <tbody className='divide-y divide-gray-200 bg-white'>
-                  {filteredDomains.map((domain) => (
-                    <tr
-                      key={domain.domain}
-                      className='divide-x divide-gray-200'
-                    >
+                  {filteredDomains.map(({ domain, rating, expiry_date }, i) => (
+                    <tr key={i} className='divide-x divide-gray-200'>
                       <td className='whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6'>
-                        {domain.domain}
+                        {domain}
                       </td>
                       <td className='whitespace-nowrap p-4 text-sm text-gray-500'>
                         <div className='flex gap-x-1'>
-                          {Array(domain.rating)
+                          {Array(rating)
                             .fill(0)
                             .map((_, index) => (
                               <svg
@@ -91,7 +88,7 @@ const TableComponent = () => {
                         </div>
                       </td>
                       <td className='whitespace-nowrap p-4 text-sm text-gray-500'>
-                        {domain.expiry_date}
+                        {expiry_date}
                       </td>
                     </tr>
                   ))}
