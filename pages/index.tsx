@@ -14,12 +14,11 @@ const getFormattedDate = (daysAhead: number) => {
   return formattedDate;
 };
 
-const IndexPage = ({ ns }) => {
+const IndexPage = () => {
   const { setDomains } = useGlobalState();
   const [domains, _setDomains] = useState([]);
 
   useEffect(() => {
-    console.log(ns);
     (async () => {
       const dates = [
         getFormattedDate(-2),
@@ -70,17 +69,6 @@ const IndexPage = ({ ns }) => {
       </div>
     </>
   );
-};
-
-import dnsRecords from '@layered/dns-records';
-
-export const getServerSideProps = async () => {
-  const ns = await dnsRecords.getNameServers('x.com');
-  return {
-    props: {
-      ns: JSON.stringify(ns),
-    },
-  };
 };
 
 export default IndexPage;
